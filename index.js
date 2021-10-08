@@ -1,9 +1,12 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+const githubOauthRouter = require('./github-oauth/routes');
 
 const app = express()
 const port = 3000
+
+app.set('json spaces', 2);
 
 app.use(express.static('www'))
 app.use(express.json()); 
@@ -51,6 +54,7 @@ app.get('/logout',(req,res) => {
   res.redirect('/');
 });
 
+app.use('/gh', githubOauthRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
