@@ -1,12 +1,13 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
-const githubOauthRouter = require('./github-oauth/routes');
+const githubOauthRouter = require('./gh/routes');
 
 const app = express()
 const port = 3000
 
 app.set('json spaces', 2);
+app.set('view engine', 'ejs');
 
 app.use(express.static('www'))
 app.use(express.json()); 

@@ -1,3 +1,4 @@
+const express = require('express');
 const router = require('express').Router();
 const got = require('got');
 
@@ -5,7 +6,6 @@ require('dotenv').config();
 
 const client_id = process.env.CLIENT_ID
 const client_secret = process.env.CLIENT_SECRET;
-
 
 router.get('/login', (req, res) => {
     const params = new URLSearchParams({
@@ -51,18 +51,18 @@ router.get('/oauth-callback', async (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-    req.session.githubOauth = undefined;
-    res.redirect('/gh');
+    req.session.destroy((err)=> {
+        res.redirect('/gh');
+    });
 });
 
 router.get('/', (req, res) => {
-    if (req.session.githubOauth && req.session.githubOauth.githubApiUser) {
-        res.json(req.session.githubOauth.githubApiUser);
+    if (req.session.githubOauth) {
+        res.render('../gh/views/index.ejs', { githubApiUser: req.session.githubOauth.githubApiUser });
     }
     else {
-        res.redirect('/gh/login');
+        res.render('../gh/views/index.ejs');
     }
 })
-
 
 module.exports = router;
