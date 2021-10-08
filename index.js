@@ -30,19 +30,27 @@ app.use(sessions({
 app.get('/',(req,res) => {
   let session=req.session;
   if(session.userid){
-      res.send("Welcome User <a href=\'/logout'>click to logout</a>");
   }else
   res.redirect('/');
 });
 
-app.post('/user',(req,res) => {
+function login(email, password) {
+
+  return true;
+}
+
+app.post('/newuser',(req,res) => {
+
+});
+
+app.post('/login',(req,res) => {
 
   console.log( req.body );
-  if(req.body.email == "a@gmail.com" && req.body.password == "b"){
+  if( login(req.body.email, req.body.password)){
       session=req.session;
       session.userid=req.body.email;
       console.log(req.session)
-      res.send(`Hey there, welcome ${req.body.email}<a href=\'/logout'>click to logout</a>`);
+      res.redirect('/');
   }
   else{
       res.send(`Invalid username or password <a href='/'>Retry</a>`);
