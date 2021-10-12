@@ -9,7 +9,7 @@ const port = 3000
 app.set('json spaces', 2);
 app.set('view engine', 'ejs');
 
-app.use(express.static('www'))
+// app.use(express.static('www'))
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
 
